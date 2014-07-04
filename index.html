@@ -31,7 +31,7 @@
 							<li class="fragment">JSON</li>
 							<li class="fragment">Closure scopes</li>
 						</ul>
-						<p class="fragment"><a href="angular.html">Angular</a></p>
+						<p class="fragment"><a href="#/6">Angular</a></p>
 						<ul>
 							<li class="fragment">Expression y {{Brackets}}</li>
 							<li class="fragment">Modules, services, y mas...</li>
@@ -48,7 +48,7 @@
 				<section>
 					<h2>Agenda</h2>
 					<p>
-						<p class="fragment"><a href="#/3">Ending</a></p>
+						<p class="fragment"><a href="sgeComponents.html">Ending</a></p>
 						<ul>
 							<li class="fragment">Angular y Jboss</li> <!-- Ivo -->
 							<li class="fragment">Angular y Require JS</li> <!-- Ivo -->
@@ -67,9 +67,9 @@
 					<section>
 						<h2>Fast JS</h2>
 						<ul>
-							<li><a href="#/3">Javascript y sus trucos</a></li>
-							<li><a href="#/4">JSON</a></li>
-							<li><a href="#/5">Closure scopes</a></li>
+							<li><a href="#/3/1">Javascript y sus trucos</a></li>
+							<li><a href="#/4/1">JSON</a></li>
+							<li><a href="#/5/1">Closure scopes</a></li>
 						</ul>
 					</section>
 
@@ -236,35 +236,1015 @@ console.log(parseo);
 				</section>					
 				<!-- end Fast JS: JSON -->
 
-			<!-- Closure scopes -->
+					<!-- Closure scopes -->
 			<section>
 				<section>
 					<h2>Closure scopes</h2>
 					<p class="fragment">Scope: ambito o contexto donde co-existen variables y metodos</p>
 					<p class="fragment">Closure Scope: expresiones (normalmente funciones o metodos) que pueden acceder a otros ambitos</p>
 				</section>
-
 				<section>
 					<h2>Closure scopes | Ejemplo</h2>
 					<a href="ejemplos/scopes.html" target="_blank">Ejemplo</a>
 				</section>
-
 			</section>
-
-			<!-- end Closure scopes -->
-
-		</section> 
 		<!-- end Fast JS -->
 
 		<!-- Angular -->
 			<section>
 				<section>
 					<h2>Angular</h2>
-					<a href="angular.html">window.goTo('Angular');</a>
+					<ul>
+						<li><a href="#/7">Expression y {{Brackets}}</a></li>
+						<li><a href="#/8">Modules, services, y mas...</a></li>
+						<li><a href="#/9">Scopes y scopes</a></li>
+						<li><a href="#/10">MVC en angular</a></li>
+						<li><a href="#/11">Angular Builts-in</a></li> <!-- Ivo -->
+						<li><a href="#/18">DI y buenas practicas</a></li> <!-- Ivo -->
+						<li><a href="#/19">Angular routing con ui-router</a></li> <!-- Ivo -->
+						<li><a href="#/20">Estructura de carpetas</a></li> <!-- Ivo -->
+					</ul>
 				</section>
 			</section> 
 
-			</div>
+        <!-- Angular -->
+
+
+            <!-- Angular: Expression and brackets -->
+                        <!-- Angular: Expression and brackets -->
+            <section>
+                <section>
+                    <h2>Expresiones en Angular</h2>
+                    <p class="fragment">Las expresiones en Angular son sentencias comunes de JS con las siguientes restricciones</p>
+                    <p class="fragment">
+                        <ul>
+                            <li>Cada expresion es evaluada en el scope actual</li>
+                            <li>Si la expresion fuera a dar un error o fuera invalida se devuelve null y el programa continua</li>
+                            <li>No se permiten sentencias condiconales, ciclos o excepciones</li>
+                            <li>Se pueden usar los filtros de Angular o propios definidos en el modulo</li>
+                            <li>Si se desea usar una expresion mas compleja, se puede usar <span style="font-style: italic;">$eval</span> proporcionado en el scope</li>
+                        </ul>
+                    </p>
+                </section>
+                <!-- end Angular: Expression and brackets -->
+            </section>
+
+            <!-- Modules, services y mas...  -->
+                <section>
+                    <section>
+                        <h2>Modules</h2>
+                        <p class="fragment">En Angular un modulo es un conjunto de elementos que coordinan para trabajar</p>
+                        <p class="fragment">
+                            Un modulo Angular puede estar compuesto por
+                            <ul>
+                                <li>Controladores</li>
+                                <li>Servicios</li>
+                                <li>Directivas</li>
+                                <li>Otros modulos</li>
+                            </ul>
+                        </p>
+                        <p class="fragment">Un modulo Angular se crea de la siguiente forma:</p>
+                        <pre><code class="fragment" data-trim contenteditable>
+                            angular.module("NOMBRE", []);
+                        </code></pre>
+                        <p class="fragment">Tambien puede ser guardado en una variable para referirse a el despues</p>
+                        <pre><code class="fragment" data-trim contenteditable>
+                            var miModulo = angular.module("NOMBRE", []);
+                        </code></pre>
+                    </section>
+
+                <section>
+                    <h2>Controladores</h2>
+                    <p class="fragment">Son los encargados de manipular o brindar los comportamientos necesarios para trabajar con las vistas (paginas para los usuarios) y los datos (modelos). Va a ser el encargado de trabajar en un ambito HTML</p>
+                    <p class="fragment">
+                        Para crear un controlador en Angular:
+                    </p>
+                    <pre><code class="fragment" data-trim contenteditable>
+var miModulo = angular.module("NOMBRE MODULO", []);
+miModulo.contoller("NombreCtrl", function($scope) {
+    //Codigo del controlador
+});
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>Services vs Factory</h2>
+                    <p class="fragment">En Angular hay 2 formas de brindar servicios. Una es por factory y la otra por service</p>
+                    <p class="fragment">
+                        La diferencia es que factory devuelve siempre la MISMA instancia de un objeto, mientras que service crea una instancia nueva cada vez que se llama
+                    </p>
+                    <p class="fragment">
+                        Para realizar peticiones ajax, por ejemplo, usariamos un factory ya que cada peticion ajax es asincronica y pueden especificar una funcion callback diferente a cada llamado, por mas que el objeto factory sea el mismo, la peticion respondera a distintos callbacks, sin necesidad de crear objetos distintos.
+                    </p>
+                    <pre><code class="fragment" data-trim contenteditable>
+var miModulo = angular.module("NOMBRE MODULO", []);
+miModulo.factory("NombreFactory", function() {
+    //Los factory devuelven un objeto
+    var miFactory = {};
+    miFactory.servicio = function() { ... }
+    return miFactory;
+});
+                    </code></pre>
+
+                    <pre><code class="fragment" data-trim contenteditable>
+var miModulo = angular.module("NOMBRE MODULO", []);
+miModulo.service("NombreSrv", function() {
+    //Los service devuelven una funcion que sera usada como constructora, esta funcion puede recibir parametros
+    var miService = function() {
+
+    };  
+    return miService;
+});
+                    </code></pre>
+                </section>
+
+            </section>
+
+            <section>
+                    <h2>Scopes y scopes</h2>
+                    <p class="fragment">En angular los scopes trabajan por herencia, es decir, si tenemos anidamiento de scopes/controllers, si una propiedad no existe en el scope hijo se busca en el padre y ambos trabajan sobre el, hasta que el hijo posea la propiedad</p>
+                    <p class="fragment">Todos los scopes tiene un atributo llamado <span style="font-style: italic">$root</span> que representa el scope principal del modulo.</p>
+                    <p class="fragment">Dentro de los controllers se pueden asignar funcionalidad a los scopes a traves de la DI. En angular sus servicios de inyeccion llevan el simbolo $ delante.</p>
+                </section>
+
+            <section>
+                    <h2>MVC en Angular</h2>
+                    <p class="fragment">MVC (Model View Controller)</p>
+                    <p class="fragment">En Angular la vista (view) es la pagina HTML/JSP</p>
+                    <p class="fragment">el controlador (controller) es uno de los definidos mediante modulo.controller(...)</p>
+                    <p class="fragment">el modelo es implicito y se representa mediante el $scope que es un modelo global que puede tener propiedades (funciones, objetos, atributos) que representarian nuestros modelos de datos para trabajar con los Ctrls y las vista</p>
+                    <a href="ejemploAngular.html" target="_blank">Ejemplo Angular</a>
+                </section>
+
+
+                <section>
+                    <h2>Angular Builts-in</h2>
+                </section>
+                <section>
+                    <section>
+                        <h2>Directivas vinculantes</h2>
+                        <p>Evalúa los datos del modelo y los inserta en el contenido HTML</p>
+                    </section>
+
+                    <section>
+                        <h2>ng-bind o {{ }}</h2>
+                        <pre>
+                            <code code >
+$scope.todos = [ {accion:'Caminar'}, {accion:'Correr'}]
+
+<div>Hay {{todos.length}} elementos.</div>
+
+<div>
+    Hay <span ng-bind="todos.length"></span> elementos.
+</div>
+                            </code>
+                        </pre>
+                    </section>
+                    <section>
+                        <h2>ng-bind-template</h2>
+                        <pre>
+                            <code code >
+<div ng-bind-template="Primero: {{todos[0].accion}}. Segundo: {{todos[1].accion}}">
+
+</div>
+                            </code>
+                        </pre>
+                    </section>
+                    <section>
+                        <h2>ng-bind-html</h2>
+                        <p>
+                            <atrong>Peligroso!</atrong>
+                            Crea una vinculación utilizando la propiedad innerHTML de un elemento HTML.
+                        </p>
+                        <pre>
+                            <code code >
+$scope.contenidoHTML = '<a href="#" class="btn btn-default">Link</a>';
+
+<div><p ng-bind-html="contenidoHTML"></p></div>
+
+                            </code>
+                        </pre>
+                    </section>
+                    <section>
+                        <h2>ng-non-bindable</h2>
+                        <p>Previene que AngularsJS vincule alguna expression</p>
+                        <pre>
+                            <code code >
+
+<div ng-non-bindable>
+    AngularJS usa {{ y }} caracteres como plantilla.
+</div>
+                            </code>
+                        </pre>
+                    </section>
+                    <section>
+                        <h2>ng-model</h2>
+                        <pre>
+                            <code code  >
+
+<div id="todoPanel2" class="panel" ng-controller="defaultCtrl">
+    <h3 class="panel-header">To Do List</h3>
+
+    <div class="well">
+        <div>El primer item es: {{todos[0].accion}}</div>
+    </div>
+    <div class="form-group well">
+        <label for="primerItem">Set First Item:</label>
+        <input id="primerItem" name="primerItem" class="form-control"
+               ng-model="todos[0].accion"/>
+    </div>
+</div>
+                            </code>
+                        </pre>
+                    </section>
+                </section>
+
+                <section>
+                    <section>
+                        <h2>Directivas plantilla</h2>
+                        <p>El objetivo principal es generar contenido HTML a partir de valores del modelo</p>
+                    </section>
+                    <section>
+                        <h2>ng-cloak</h2>
+                        <pre>
+                            <code code  >
+<div class="well">
+    <div class="radio" ng-repeat="button in ['None', 'Table', 'List']">
+        <label ng-cloak>
+            <input type="radio" ng-model="data.mode"
+                   value="{{button}}" ng-checked="$first">
+            {{button}}
+        </label>
+    </div>
+</div>
+                            </code>
+                        </pre>
+                    </section>
+                    <section>
+                        <h2>ng-include</h2>
+                        <p>src, onload, autoscroll</p>
+                        <pre>
+                            <code code >
+
+<ng-include src="'table.html'" onload="" autoscroll=""></ng-include>
+
+                            </code>
+                        </pre>
+                    </section>
+
+                    <section>
+                        <h2>ng-repeat</h2>
+                        <p>$index, $first, $middle, $last, $even, $odd </p>
+                        <pre>
+                            <code >
+<table class="table">
+    <thead>
+    <tr>
+        <th>#</th>
+        <th>Acción</th>
+        <th>Listo</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="item in todos">
+        <td>{{$index + 1}}</td>
+        <td>{{item.accion}}</td>
+        <td>{{item.completo}}</td>
+    </tr>
+    </tbody>
+</table>
+                            </code>
+                        </pre>
+                    </section>
+
+                    <section>
+                        <h2>ng-repeat-start y ng-repeat-end</h2>
+                        <pre>
+                            <code >
+<div class="panel panel-default">
+    <div class="panel-heading" ng-repeat-start="subMenu in data.menu.subMenu">
+        <h3 class="panel-title">{{subMenu.titulo}}</h3>
+    </div>
+    <div class="list-group" ng-repeat-end>
+        <a ng-repeat="item in subMenu.items" class="list-group-item">
+            {{item.nombre}}</a>
+    </div>
+</div>
+                            </code>
+                        </pre>
+                    </section>
+
+                    <section>
+                        <h2>ng-switch</h2>
+                        <pre>
+                            <code  >
+<div ng-switch on="data.mode">
+    <div ng-switch-when="Table">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Action</th>
+                <th>Done</th>
+            </tr>
+            </thead>
+            <tr ng-repeat="item in todos" ng-class="$odd ? 'odd' : 'even'">
+                <td>{{$index + 1}}</td>
+                <td ng-repeat="prop in item">{{prop}}</td>
+            </tr>
+        </table>
+    </div>
+    <div ng-switch-when="List">
+        <ol>
+            <li ng-repeat="item in todos">
+                {{item.action}}<span ng-if="item.complete"> (Done)</span>
+            </li>
+        </ol>
+    </div>
+    <div ng-switch-default>
+        Select another option to display a layout
+    </div>
+</div>
+                            </code>
+                        </pre>
+                    </section>
+                </section>
+
+                <section>
+                    <section>
+                        <h2>Directivas en elementos (DOM)</h2>
+                    </section>
+
+
+                    <section>
+                        <h2>ng-class y ng-style</h2>
+                        <pre>
+                            <code>
+<table class="table">
+    <thead>
+    <tr>
+        <th>#</th>
+        <th>Action</th>
+        <th>Done</th>
+    </tr>
+    </thead>
+    <tr ng-repeat="item in todos" ng-class="active">
+        <td>{{$index + 1}}</td>
+        <td>{{item.action}}</td>
+        <td ng-style="{'background-color': lightgreen}">
+            {{item.complete}}
+        </td>
+    </tr>
+</table>
+                            </code>
+                        </pre>
+                    </section>
+                    <section>
+                        <h2>ng-class-even y ng-class-odd</h2>
+                        <pre>
+                            <code  >
+<table class="table">
+    <thead>
+    <tr>
+        <th>#</th>
+        <th>Action</th>
+        <th>Done</th>
+    </tr>
+    </thead>
+    <tr ng-repeat="item in todos" ng-class-even="settings.Rows"
+        ng-class-odd="settings.Columns">
+        <td>{{$index + 1}}</td>
+        <td>{{item.action}}</td>
+        <td>{{item.complete}}</td>
+    </tr>
+</table>
+                            </code>
+                        </pre>
+                    </section>
+                    <section>
+                        <h2>ng-hide y ng-show</h2>
+                        <pre>
+                            <code  >
+<table class="table">
+    <thead>
+    <tr>
+        <th>#</th>
+        <th>Action</th>
+        <th>Done</th>
+    </tr>
+    </thead>
+    <tr ng-repeat="item in todos">
+        <td>{{$index + 1}}</td>
+        <td>{{item.action}}</td>
+        <td>
+            <span ng-hide="item.complete">(Incomplete)</span>
+            <span ng-show="item.complete">(Done)</span>
+        </td>
+    </tr>
+</table>
+                            </code>
+                        </pre>
+                    </section>
+                    <section>
+                        <h2>ng-if</h2>
+                        <pre>
+                            <code  >
+<td>
+    <span ng-if="!item.complete">(Incomplete)</span>
+    <span ng-if="item.complete">(Done)</span>
+</td>
+                            </code>
+                        </pre>
+                    </section>
+                </section>
+
+                <section>
+                    <h2>Directivas para Eventos</h2>
+                    <ul>
+                        <li>ng-blur</li>
+                        <li>ng-change</li>
+                        <li>ng-click</li>
+                        <li>ng-copy</li>
+                        <li>ng-cut</li>
+                        <li>ng-paste</li>
+                        <li>ng-dblclick</li>
+                        <li>ng-focus</li>
+                    </ul>
+                </section>
+                <section>
+                    <h2>Directivas para Eventos</h2>
+                    <ul>
+                        <li>ng-keydown</li>
+                        <li>ng-keypress</li>
+                        <li>ng-keyup</li>
+                        <li>ng-mousedown</li>
+                        <li>ng-mouseenter</li>
+                        <li>ng-mouseleave</li>
+                        <li>ng-mousemove</li>
+                        <li>ng-mouseover</li>
+                        <li>ng-mouseup</li>
+                        <li>ng-submit</li>
+                    </ul>
+                </section>
+                <section>
+                    <section>
+                        <h2>Directivas para Formularios</h2>
+                        <p>AngularJS aporta directivas para realizar la validación de los formularios</p>
+                    </section>
+                    <section>
+                        <p>
+                            AngularJS aplica las directivas para formularios
+                            automaticamente cuando encuentra elementos del tipo
+                            form, input, select, y textarea.
+                        </p>
+                    </section>
+                    <section>
+                        <p>
+                            Para utilizar las validaciones hace falta
+                            utilizar el elemento FORM, el atributo NOVALIDATE es utilizado
+                            para que los navegadores con HTML5 no realize validaciones y deje todo en manos de AngularJS
+                        </p>
+                        <pre>
+                            <code >
+<form name="myForm" novalidate ng-submit="addUser(newUser)"></form>
+                            </code>
+                        </pre>
+                    </section>
+                    <section>
+                        <h2>Monitoreo del Formulario</h2>
+                        <ul>
+                           <li>
+                               <p><strong>$pristine</strong> true si el usuario no interactuó con el elemento/formulario</p>
+                           </li>
+                           <li>
+                               <p><strong>$dirty</strong> true si el usuario interactuó con el elemento/formulario</p>
+                           </li>
+                           <li>
+                               <p><strong>$valid</strong> true si el contenido del elemento/formulario es válido</p>
+                           </li>
+                           <li>
+                               <p><strong>$invalid</strong> true si el contenido del elemento/formulario es inválido</p>
+                           </li>
+                           <li>
+                               <p><strong>$error</strong> provee de información del error producido.</p>
+                           </li>
+                       </ul>
+                    </section>
+
+                    <section>
+                        <pre>
+                            <code>
+
+<div>Valid: {{myForm.$valid}}</div>
+
+<button type="submit"
+        class="btn btn-primary btn-block"
+        ng-disabled="myForm.$invalid">OK</button>
+
+                            </code>
+                        </pre>
+                    </section>
+                    <section>
+                        <h2>CSS utlizado por AngularJS</h2>
+                        <ul>
+                            <li>
+                                <p><strong>ng-pristine</strong> los elementos con los que no interactuó el usuario son añadidos a esta clase</p>
+                            </li>
+                            <li>
+                                <p><strong> ng-dirty</strong> los elementos con los que interactuó el usuario son añadidos a esta clase</p>
+                            </li>
+                            <li>
+                                <p><strong>ng-valid</strong> los elementos que son válidos son añadidos a esta clase</p>
+                            </li>
+                            <li>
+                                <p><strong>ng-invalid</strong> los elementos que no son válidos son añadidos a esta clase</p>
+                            </li>
+                        </ul>
+                    </section>
+                    <section>
+                        <pre>
+                            <code>
+<div class="well">
+    Message: {{message}}
+    <div> Valid:
+        <span class="summary"
+              ng-class="myForm.$valid ? 'ng-valid' : 'ng-invalid'">{{myForm.$valid}}
+        </span>
+    </div>
+</div>
+
+                            </code>
+                        </pre>
+                    </section>
+                    <section>
+                        <h2>Atributos de las Directivas</h2>
+                        <ul>
+                            <li>ng-model</li>
+                            <li>ng-change</li>
+                            <li>ng-minlength</li>
+                            <li>ng-maxlength</li>
+                            <li>ng-pattern</li>
+                            <li>ng-required</li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h2>Usando elementos input </h2>
+                        <ul>
+                            <li>ng-model</li>
+                            <li>ng-change</li>
+                            <li>ng-minlength</li>
+                            <li>ng-maxlength</li>
+                            <li>ng-pattern</li>
+                            <li>ng-required</li>
+                        </ul>
+                    </section>
+                    <section>
+                        <pre>
+                            <code  >
+<div id="todoPanel" class="panel" ng-controller="defaultCtrl">
+    <form name="myForm" novalidate>
+        <div class="well">
+            <div class="form-group">
+                <label>Text:</label>
+                <input name="sample" class="form-control" ng-model="inputValue"
+                       ng-required="requireValue" ng-minlength="3"
+                       ng-maxlength="10" ng-pattern="matchPattern">
+            </div>
+        </div>
+        <div class="well">
+            <p>Required Error: {{myForm.sample.$error.required}}</p>
+
+            <p>Min Length Error: {{myForm.sample.$error.minlength}}</p>
+
+            <p>Max Length Error: {{myForm.sample.$error.maxlength}}</p>
+
+            <p>Pattern Error: {{myForm.sample.$error.pattern}}</p>
+
+            <p>Element Valid: {{myForm.sample.$valid}}</p>
+        </div>
+    </form>
+</div>
+                            </code>
+                        </pre>
+                    </section>
+                    <section>
+                        <h2>Usando elementos checkboxes </h2>
+                        <ul>
+                            <li>ng-model</li>
+                            <li>ng-change</li>
+                            <li>ng-true-value</li>
+                            <li>ng-false-value</li>
+                        </ul>
+                    </section>
+                    <section>
+                        <pre>
+                            <code  >
+<div id="todoPanel1" class="panel" ng-controller="defaultCtrl">
+    <form name="myForm" novalidate>
+        <div class="well">
+            <div class="checkbox">
+                <label>
+                    <input name="sample" type="checkbox" ng-model="inputValue"
+                           ng-true-value="Hurrah!" ng-false-value="Boo!">
+                    This is a checkbox
+                </label>
+            </div>
+        </div>
+        <div class="well">
+            <p>Model Value: {{inputValue}}</p>
+        </div>
+    </form>
+</div>
+                            </code>
+                        </pre>
+                    </section>
+                    <section>
+                        <h2>Los atributos de los elementos textarea son los mismos que los del input</h2>
+                        <pre>
+                            <code  >
+<div class="form-group">
+    <textarea name="sample" cols="40" rows="3"
+              ng-model="textValue"
+              ng-required="requireValue" ng-minlength="3"
+              ng-maxlength="10" ng-pattern="matchPattern">
+    </textarea>
+</div>
+                            </code>
+                        </pre>
+                    </section>
+                    <section>
+                        <h2>Usando los elementos select</h2>
+                        <pre>
+                            <code  >
+<div class="form-group">
+    <label>Select an Action:</label>
+    <select ng-model="selectValue"
+            ng-options="item.action for item in todos">
+    </select>
+</div>
+                            </code>
+                        </pre>
+                        <p>Se puede definir que valor vincular al modelo de la siguiente manera</p>
+                        <pre>
+                            <code >
+<select ng-model="selectValue"
+        ng-options="item.id as item.action for item in todos">
+    <option value="">(Pick One)</option>
+</select>
+                            </code>
+                        </pre>
+                    </section>
+                    <section>
+                        <h2>Creando elementos optgroup</h2>
+
+                        <p>se utiliza para agrupar items basados en algun atributo</p>
+                        <pre>
+                            <code  >
+<div class="well">
+    <div class="form-group">
+        <label>Select an Action:</label>
+        <select ng-model="selectValue"
+                ng-options="item.action group by item.place for item in todos">
+            <option value="">(Pick One)</option>
+        </select>
+    </div>
+</div>
+<div class="well">
+    <p>Selected: {{selectValue || 'None'}}</p>
+</div>
+                            </code>
+                        </pre>
+                        <img src="images/optgroup.jpg">
+                    </section>
+                </section>
+
+                <section>
+                    <section>
+                        <h2> Dependency Injection</h2>
+                        <p>Hay 3 maneras informar que componente inyectar</p>
+                    </section>
+                    <section>
+                        <h2>Implicitamente por el nombre de los parámetros de la función</h2>
+                        <pre>
+                            <code >
+function MyController($scope, greeter) {
+// ...
+}
+                            </code>
+                        </pre>
+                    </section>
+                    <section>
+                        <h2>Usando la anotación propiedad $inject</h2>
+                         <pre>
+                            <code>
+var MyController = function(renamed$scope, renamedGreeter) {
+...
+}
+MyController['$inject'] = ['$scope', 'greeter'];
+                            </code>
+                        </pre>
+                    </section>
+                    <section>
+                        <h2>Usando la anotación de array en linea</h2>
+
+                        <p>Maneras informar que componente inyectar</p>
+                         <pre>
+                            <code >
+someModule.factory('greeter', ['$window', function(renamed$window) {
+// ...
+}]);
+                            </code>
+                        </pre>
+                    </section>
+                    <section>
+                        <h2> Donde se puede usar?</h2>
+                    </section>
+                    <section>
+                        <h2>Factory Methods</h2>
+                         <pre>
+                            <code >
+angular.module('myModule', [])
+.factory('serviceId', ['depService', function(depService) {
+...
+}])
+.directive('directiveName', ['depService', function(depService) {
+...
+}])
+.filter('filterName', ['depService', function(depService) {
+...
+}]);
+                            </code>
+                        </pre>
+                    </section>
+                    <section>
+                        <h2>Module Methods</h2>
+                         <pre>
+                            <code>
+angular.module('myModule', [])
+.config(['depProvider', function(depProvider){
+...
+}])
+.run(['depService', function(depService) {
+...
+}]);
+                            </code>
+                        </pre>
+                    </section>
+                    <section>
+                        <h2>Controllers</h2>
+                         <pre>
+                            <code >
+someModule.controller('MyController', ['$scope', 'dep1', 'dep2', function($scope, dep1,
+dep2) {
+...
+$scope.aMethod = function() {
+...
+}
+...
+}]);
+                            </code>
+                        </pre>
+                    </section>
+                </section>
+
+                <section>
+                    <section>
+                        <h2>Angular UI-Router</h2>
+
+                        <p>Provee una manera diferente de trabajar que ngRoute de AngularJS</p>
+                    </section>
+                    <section>
+                        <h2>Estados vs Ruta URL</h2>
+
+                        <p>
+                            Con los estados las vistas no estan acopladas a una URL y permite cambiar de vistas
+                            internamente sin la necesidad de cambiar la URL
+                        </p>
+                    </section>
+                    <section>
+                        <h2>Donde configurar los estados?</h2>
+
+                        <p>$stateProvider es el encargado de proveer de los estados en la aplicación y es configurado
+                            dentro del .config() del módulo</p>
+                    </section>
+                    <section>
+                        <h2>Ejemplo</h2>
+                        <pre>
+                            <code >
+<!-- in index.html -->
+<body ng-controller="MainCtrl">
+<section ui-view></section>
+</body>
+                            </code>
+                            <code >
+// in app-states.js (or whatever you want to name it)
+$stateProvider.state('contacts', {
+template: '<h1>My Contacts</h1>'
+})
+                            </code>
+                        </pre>
+                    </section>
+                    <section>
+                        <h2>Donde se inserta la plantilla?</h2>
+                        <p>Cuando se activa un estado, la plantilla se inserta en el ui-view de su padre, si no lo tiene entonces se inserta en el index</p>
+                    </section>
+                    <section>
+                        <h2>Activando un estado</h2>
+                        <ul>
+                            <li>Llamando a $state.go()</li>
+                            <li>Hacer click en un link con ui-sref</li>
+                            <li>Navegar la URL asociada al estado</li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h2>Configurando el template</h2>
+                        <ul>
+                            <li>template: html</li>
+                            <li>templateUrl: page.html</li>
+                            <li>templateUrl:function()</li>
+                            <li>templateProvider: function()</li>
+                        </ul>
+
+                    </section>
+                    <section>
+                        <h2>Configurando el controllador</h2>
+                        <ul>
+                            <li>controller: function()</li>
+                            <li>controller: 'MyCtrl'</li>
+                            <li>controller: 'MyCtrl as contact'</li>
+                            <li>controllerProvider: function()</li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h2>Resolve</h2>
+                        <p>El controlador no se cargará hasta que no se hayan resuelto todas las dependencias</p>
+                        <pre>
+                            <code >
+$stateProvider.state('myState', {
+  controller: function(){},
+  resolve:{
+    objetoSimple:function(){
+      return {value:'asd'};
+    },
+    //Retorna un promise, es lo mas utilizado
+    promiseObj:  function($http){
+      return $http({method: 'GET', url: '/someUrl'});
+    }
+  }
+}
+                            </code>
+                        </pre>
+                    </section>
+                    <section>
+                        <h2>Enviando Datos (se recomienda usar el 'data')</h2>
+                        <pre>
+                            <code >
+$stateProvider
+.state(contacts)
+.state('contacts.list', {
+templateUrl: 'contacts.list.html',
+data: {
+customData1: 44,
+customData2: "red"
+}
+})
+                            </code>
+                        </pre>
+                    </section>
+                    <section>
+                        <h2>Eventos</h2>
+                        <p>Son disparados desde $rootScope</p>
+                        <ul>
+                            <li>$stateChangeStart</li>
+                            <li>$stateNotFound</li>
+                            <li>$stateChangeSuccess</li>
+                            <li>$stateChangeError</li>
+                            <li>$viewContentLoading </li>
+                            <li>$viewContentLoaded</li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h2>Anidación de Estados</h2>
+                      <pre>
+                            <code >
+$stateProvider
+.state('contacts', {})
+.state('contacts.list', {});
+                            </code>
+                        </pre>
+                        <p>También se puede utilizar la propiedad 'parent' para anidar</p>
+                    </section>
+                    <section>
+                        <p>Los hijos heredan las dependencias resueltas por su padre y los datos que hayan pasado, además si las vistas están anidadas los $scope se heredarán</p>
+                    </section>
+                    <section>
+                        <h2>Estado Abstracto</h2>
+                      <pre>
+                            <code >
+$stateProvider
+.state('contacts', {
+abstract: true,
+url: '/contacts',
+
+// Note: abstract still needs a ui-view for its children to populate.
+// You can simply add it inline here.
+template: '<ui-view/>'
+})
+.state('contacts.list', {
+// url will become '/contacts/list'
+url: '/list'
+//...more
+})
+.state('contacts.detail', {
+// url will become '/contacts/detail'
+url: '/detail',
+//...more
+})
+                            </code>
+                        </pre>
+                    </section>
+                    <section>
+                        <h2>Multiples Vistas</h2>
+                      <pre>
+                            <code>
+                                <body>
+<div ui-view="filters"></div>
+<div ui-view="tabledata"></div>
+<div ui-view="graph"></div>
+</body>
+                            </code>
+                        </pre>
+                    </section>
+                    <section>
+                        <h2>Multiples Vistas</h2>
+                      <pre>
+                            <code>
+$stateProvider
+.state('report',{
+views: {
+'filters': {
+templateUrl: 'report-filters.html',
+controller: function($scope){ ... controller stuff just for filters view ... }
+},
+'tabledata': {
+templateUrl: 'report-table.html',
+controller: function($scope){ ... controller stuff just for tabledata view ... }
+},
+'graph': {
+templateUrl: 'report-graph.html',
+controller: function($scope){ ... controller stuff just for graph view ... }
+},
+}
+})
+                            </code>
+                        </pre>
+                    </section>
+                    <section>
+                        <h2>Parámetros</h2>
+                        <p>Se recupera el valor pasado por medio de $stateParams</p>
+                        <ul>
+                            <li>url: "/contacts/:contactId"</li>
+                            <li>url: "/contacts/{contactId}"</li>
+                            <li>url: "/contacts/{contactId:[0-9]{1,8}}"</li>
+                            <li>url: "/contacts?myParam1&myParam2"</li>
+                        </ul>
+                        <pre>
+                            <code>
+$stateProvider.state('contacts.detail', {
+url: '/contacts/:contactId',
+controller: function($stateParams){
+$stateParams.contactId
+}
+})
+                            </code>
+                        </pre>
+                    </section>
+                    <section>
+                        <h2>Ruta Absoluta</h2>
+                        <pre>
+                            <code >
+$stateProvider
+.state('contacts', {
+url: '/contacts',
+...
+})
+.state('contacts.list', {
+url: '^/list',
+...
+});
+                            </code>
+                        </pre>
+                    </section>
+                    <section>
+                        <h2>Opciones para redireccionar</h2>
+                        <ul>
+                            <li>$urlRouterProvider.when('', '/index');</li>
+                            <li>$urlRouterProvider.otherwise('/index');</li>
+                        </ul>
+                    </section>
+                </section>
+
+            </div>
 
 		</div>
 
