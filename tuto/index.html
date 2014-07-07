@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+
+	<title>Migracion Angular/YeoMan - SGE/JBoss</title>		
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+	<link rel="stylesheet" href="css/reveal.min.css">
+	<link rel="stylesheet" href="css/theme/default.css" id="theme">
+
+	<!-- For syntax highlighting -->
+	<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+</head>
+
+<body>
+	<div class="reveal">
+		<div class="slides">
+			<section>
+				<h1>Tutorial migracion</h1>
+				<h2>From: Angular/YeoMan to: SGE/JBoss</h2>
+			</section>
+
+			<section>
+				<h2>Pasos a realizar - Start!</h2>
+				<ul>
+					<li class="fragment">Crear dentro scripts/app, una carpeta con el nombre <span style="font-style: italic">ng-CU</span></li>
+					<li class="fragment">Dentro de esa carpeta, crear las carpetas controllers, services, modules o la forma de organizacion que sea comodo</li>
+					<li class="fragment">Crear un archivo <span style="font-style: italic">CUapp.js</span></li>
+				</ul>
+			</section>
+
+			<section>
+				<h2>Pasos a realizar - 2nd round</h2>
+				<ul>
+					<li><a href="#/3">Migrar controllers, services, a modulos <span style="font-style: italic">RequireJS</span></a></li>
+					<li><a href="#/4">Crear el modulo principal</a></li>
+					<li><a href="#/5">Configuracion general y angular.bootstrap</a></li>
+				</ul>
+			</section>
+
+			<section>
+				<section>
+				<h2>Pasos a realizar - Migracion</h2>
+				<pre><code data-trim contenteditable>
+//Controller, service o modulo normal
+var modulo = angular.module('templateModule', []);
+modulo.controller("TemplateCtrl", ["dependencies", function(inyection) {
+	....
+}]);
+				</code></pre>
+				<p>app/ng-CU/controllers/misControllers.js</p>
+				<pre><code data-trim contenteditable>
+//Definiendo modulo Require
+define([], function() {
+var moduleDef = {};
+moduleDef.init = function(app) {
+	//Aqui crear el controller #TagAQUI
+	app.controller("TemplateCtrl", ["dependencies", function(inyection) {
+		    ....
+	}]);
+	//Repetir #TagAQUI para cada controller que se use
+};
+return moduleDef;
+});
+</code></pre>
+
+			</section>
+
+			<section>
+				<h2>Migracion para services</h2>
+				<p>app/ng-CU/services/misServices.js</p>
+				<pre><code data-trim contenteditable>
+//Definiendo modulo Require
+define([], function() {
+var moduleDef = {};
+moduleDef.init = function(app) {
+	//Aqui crear el controller #TagAQUI
+	app.service("TemplateSrv", ["dependencies", function(inyection) {
+		    ....
+	}]);
+	//Repetir #TagAQUI para cada service que se use
+};
+return moduleDef;
+});
+</code></pre>
+			</section>
+				
+			</section>
+
+			<!--                                -->
+
+			<section>
+				<h2>Pasos a realizar - Creacion del modulo principal</h2>
+				<p>app/ng-CU/CUapp.js</p>
+				<pre><code data-trim contenteditable>
+//Definiendo modulo Require
+define(["angular", "CUCtrls", "CUSrvs", ..], function(angular, ctrls, svrs, ..) {
+var CUModule = angular.module("CUApp", ["dependencies"]);
+ctrls.init(CUModule);
+svrs.init(CUModule);
+
+angular.bootstrap(document.getElementsByTagName("body")[0], [ "CUApp" ]); //si usamos el body
+angular.bootstrap(document.getElementById("ID")[0], [ "CUApp" ]); //si vamos a usar otro elemento
+
+return CUModule;
+});
+</code></pre>
+			</section>
+
+			<section>
+				<section>
+					<h2>Pasos a realizar - Config general en JSP</h2>
+					<ul>
+						<li class="fragment">Creamos la Index.jsp o traemos nuestra Index.html y la renombramos a .jsp</li>
+						<li class="fragment">Aramos la cabezera como cualquier jsp con los <span style="font-style: italic">&ltjsp:include&gt</span> como siempre</li>
+						<li class="fragment">Eliminamos los scripts bower, etc e incluimos al final de todo una sola etiqueta <span style="font-style: italic">&ltscript&gt</span></li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>Pasos a realizar - Config general en JSP</h2>
+					<pre><code data-trim contenteditable>
+<script>
+	require("app/config.js", function(config) {
+		//Por cada modulo Require que hemos creado hacemos config.addPath, donde los parametros son:
+		//1º parametro: Nombre que se usa en la inyecion del modulo principal, ej. CUCtrls, CUSrvs, etc
+		//2º parametro: Ruta del archivo siguiendo la siguiente sintaxis ng-CU/carpeta/archivo (sin la extension js). Ej. ng-template/controllers/misControllers
+		config.addPath("CUCtrls" ,"ng-CU/controllers/controllers");
+		config.addPath("CUSrvs" ,"ng-CU/services/services");
+		//Si hubieran mas controllers, services, etc hacer una addPath por cada uno
+		//Por ultimo tambien agregamos el CUApp (sin la extension js)
+		config.addPath("CUApp" ,"ng-CU/CUApp");
+		//Realizamos la configuracion
+		config.init();
+		//Tramoe nuestra ng-app :D
+		require(["CUApp"], function() {
+		});
+
+	});
+</script>
+				</code></pre>
+				</section>
+
+			</section>
+
+
+
+			<section>
+				<h2>Fin :D</h2>	
+				<a href="#/">Menu</a>
+			</section>
+
+		</div>
+	</div>
+
+	<script src="lib/js/head.min.js"></script>
+	<script src="js/reveal.min.js"></script>
+
+	<script>
+	Reveal.initialize({
+		controls: true,
+		progress: true,
+		history: true,
+		center: true,
+
+				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+				transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+				dependencies: [
+				{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+				]
+			});
+	</script>
+
+</body>
+</html>
