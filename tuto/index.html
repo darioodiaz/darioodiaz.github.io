@@ -132,14 +132,14 @@ return CUModule;
 		//Por cada modulo Require que hemos creado hacemos config.addPath, donde los parametros son:
 		//1º parametro: Nombre que se usa en la inyecion del modulo principal, ej. CUCtrls, CUSrvs, etc
 		//2º parametro: Ruta del archivo siguiendo la siguiente sintaxis ng-CU/carpeta/archivo (sin la extension js). Ej. ng-template/controllers/misControllers
-		config.addPath("CUCtrls" ,"ng-CU/controllers/controllers");
-		config.addPath("CUSrvs" ,"ng-CU/services/services");
+		config.addPath("CUCtrls" ,"ng-CU/controllers/controllers", true);
+		config.addPath("CUSrvs" ,"ng-CU/services/services", true);
 		//Si hubieran mas controllers, services, etc hacer una addPath por cada uno
 		//Por ultimo tambien agregamos el CUApp (sin la extension js)
-		config.addPath("CUApp" ,"ng-CU/CUApp");
+		config.addPath("CUApp" ,"ng-CU/CUApp", true);
 		//Realizamos la configuracion
 		config.init();
-		//Tramoe nuestra ng-app :D
+		//Traemos nuestra ng-app :D
 		require(["CUApp"], function() {
 		});
 
@@ -154,6 +154,8 @@ return CUModule;
 
 			<section>
 				<h2>Fin :D</h2>	
+				<p>Hay un ejemplo en scritps/app/ng-TemplateCU (para los scripts)</p>
+				<p>Y views/TemplateCU (para las views)</p>
 				<a href="#/">Menu</a>
 			</section>
 
