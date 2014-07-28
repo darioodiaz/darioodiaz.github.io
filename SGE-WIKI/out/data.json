@@ -1,0 +1,514 @@
+{
+    "project": {},
+    "files": {
+        "dateServices.js": {
+            "name": "dateServices.js",
+            "modules": {
+                "sgeComponents": 1
+            },
+            "classes": {
+                "sgeDateService": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "sgeMap.js": {
+            "name": "sgeMap.js",
+            "modules": {},
+            "classes": {
+                "sgeMap": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        }
+    },
+    "modules": {
+        "sgeComponents": {
+            "name": "sgeComponents",
+            "submodules": {},
+            "classes": {
+                "sgeDateService": 1,
+                "sgeMap": 1
+            },
+            "fors": {},
+            "namespaces": {},
+            "tag": "module",
+            "file": "sgeMap.js",
+            "line": 36,
+            "description": "Modulo Gde componentes para SGE"
+        }
+    },
+    "classes": {
+        "sgeDateService": {
+            "name": "sgeDateService",
+            "shortname": "sgeDateService",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "sgeComponents",
+            "namespace": "",
+            "file": "dateServices.js",
+            "line": 12,
+            "description": "Componente que permite el trabajo con fechas"
+        },
+        "sgeMap": {
+            "name": "sgeMap",
+            "shortname": "sgeMap",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "sgeComponents",
+            "namespace": "",
+            "file": "sgeMap.js",
+            "line": 36,
+            "description": "Componente que permite el trabajo con mapas"
+        }
+    },
+    "classitems": [
+        {
+            "file": "dateServices.js",
+            "line": 22,
+            "description": "Permite establecer la fecha maxima que sera usada para comparar con una fecha variable",
+            "itemtype": "method",
+            "name": "setMaximumDate",
+            "params": [
+                {
+                    "name": "fecha",
+                    "description": "la fecha que sera usada como maxima",
+                    "type": "String | Date"
+                }
+            ],
+            "class": "sgeDateService",
+            "module": "sgeComponents"
+        },
+        {
+            "file": "dateServices.js",
+            "line": 36,
+            "description": "Devuelve la fecha actual pudiendo especificar algun formato",
+            "itemtype": "method",
+            "name": "getToday",
+            "return": {
+                "description": "fecha actual",
+                "type": "String"
+            },
+            "params": [
+                {
+                    "name": "formato",
+                    "description": "el formato que se le dara a la fecha, pueden ser cualquiera de los establecidos por momentJS.\nSi se omite se devuelve con el formato Dia/Mes/Año",
+                    "type": "String"
+                }
+            ],
+            "class": "sgeDateService",
+            "module": "sgeComponents"
+        },
+        {
+            "file": "dateServices.js",
+            "line": 52,
+            "description": "Permite establecer la fecha minima que sera usada para comparar con una fecha variable",
+            "itemtype": "method",
+            "name": "setMinimumDate",
+            "params": [
+                {
+                    "name": "fecha",
+                    "description": "la fecha que sera usada como minima",
+                    "type": "String | Date"
+                }
+            ],
+            "class": "sgeDateService",
+            "module": "sgeComponents"
+        },
+        {
+            "file": "dateServices.js",
+            "line": 66,
+            "description": "Devuelve la fecha maxima pudiendo especificar algun formato",
+            "itemtype": "method",
+            "name": "getMaxDate",
+            "return": {
+                "description": "fecha maxima (si no fue seteada devuelve la fecha actual como maxima)",
+                "type": "String"
+            },
+            "params": [
+                {
+                    "name": "formato",
+                    "description": "el formato que se le dara a la fecha, pueden ser cualquiera de los establecidos por momentJS.\nSi se omite se devuelve con el formato Dia/Mes/Año",
+                    "type": "String"
+                }
+            ],
+            "class": "sgeDateService",
+            "module": "sgeComponents"
+        },
+        {
+            "file": "dateServices.js",
+            "line": 82,
+            "description": "Devuelve la fecha minima pudiendo especificar algun formato",
+            "itemtype": "method",
+            "name": "getMinDate",
+            "return": {
+                "description": "fecha minima (si no fue seteada devuelve 01/01/1900)",
+                "type": "String"
+            },
+            "params": [
+                {
+                    "name": "formato",
+                    "description": "el formato que se le dara a la fecha, pueden ser cualquiera de los establecidos por momentJS.\nSi se omite se devuelve con el formato Dia/Mes/Año",
+                    "type": "String"
+                }
+            ],
+            "class": "sgeDateService",
+            "module": "sgeComponents"
+        },
+        {
+            "file": "dateServices.js",
+            "line": 98,
+            "description": "Verifica si el formato de una fecha es valido",
+            "itemtype": "method",
+            "name": "isDateValid",
+            "return": {
+                "description": "true = fecha valida, false = fecha invalida",
+                "type": "Boolean"
+            },
+            "params": [
+                {
+                    "name": "fecha",
+                    "description": "la fecha a validar",
+                    "type": "String"
+                }
+            ],
+            "class": "sgeDateService",
+            "module": "sgeComponents"
+        },
+        {
+            "file": "dateServices.js",
+            "line": 115,
+            "description": "Formatea una fecha de acuerdo con los formatos establecidos por momentJS",
+            "itemtype": "method",
+            "name": "formatDate",
+            "return": {
+                "description": "la fecha formateada",
+                "type": "String"
+            },
+            "params": [
+                {
+                    "name": "fecha",
+                    "description": "la fecha a formatear",
+                    "type": "String | Date"
+                },
+                {
+                    "name": "formato",
+                    "description": "el formato de la fecha",
+                    "type": "String"
+                }
+            ],
+            "class": "sgeDateService",
+            "module": "sgeComponents"
+        },
+        {
+            "file": "dateServices.js",
+            "line": 133,
+            "description": "Verifica si 2 fechas son iguales",
+            "itemtype": "method",
+            "name": "isSameDate",
+            "return": {
+                "description": "",
+                "type": "Boolean"
+            },
+            "params": [
+                {
+                    "name": "fecha",
+                    "description": "primera fecha",
+                    "type": "String | Date"
+                },
+                {
+                    "name": "fecha",
+                    "description": "segunda fecha",
+                    "type": "String | Date"
+                }
+            ],
+            "class": "sgeDateService",
+            "module": "sgeComponents"
+        },
+        {
+            "file": "dateServices.js",
+            "line": 155,
+            "description": "Verifica si una fecha esta antes que otra",
+            "itemtype": "method",
+            "name": "isDateBefore",
+            "return": {
+                "description": "",
+                "type": "Boolean"
+            },
+            "params": [
+                {
+                    "name": "fecha",
+                    "description": "primera fecha",
+                    "type": "String | Date"
+                },
+                {
+                    "name": "fecha",
+                    "description": "segunda fecha",
+                    "type": "String | Date"
+                }
+            ],
+            "class": "sgeDateService",
+            "module": "sgeComponents"
+        },
+        {
+            "file": "dateServices.js",
+            "line": 177,
+            "description": "Verifica si una fecha esta despues que otra",
+            "itemtype": "method",
+            "name": "isDateAfter",
+            "return": {
+                "description": "",
+                "type": "Boolean"
+            },
+            "params": [
+                {
+                    "name": "fecha",
+                    "description": "primera fecha",
+                    "type": "String | Date"
+                },
+                {
+                    "name": "fecha",
+                    "description": "segunda fecha",
+                    "type": "String | Date"
+                }
+            ],
+            "class": "sgeDateService",
+            "module": "sgeComponents"
+        },
+        {
+            "file": "dateServices.js",
+            "line": 201,
+            "description": "Verifica si la fecha minima seteada esta despues de una fecha",
+            "itemtype": "method",
+            "name": "minDateAfter",
+            "return": {
+                "description": "",
+                "type": "Boolean"
+            },
+            "params": [
+                {
+                    "name": "fecha",
+                    "description": "fecha a comparar",
+                    "type": "String | Date"
+                }
+            ],
+            "class": "sgeDateService",
+            "module": "sgeComponents"
+        },
+        {
+            "file": "dateServices.js",
+            "line": 224,
+            "description": "Verifica si la fecha minima seteada esta antes de una fecha",
+            "itemtype": "method",
+            "name": "minDateBefore",
+            "return": {
+                "description": "",
+                "type": "Boolean"
+            },
+            "params": [
+                {
+                    "name": "fecha",
+                    "description": "fecha a comparar",
+                    "type": "String | Date"
+                }
+            ],
+            "class": "sgeDateService",
+            "module": "sgeComponents"
+        },
+        {
+            "file": "dateServices.js",
+            "line": 248,
+            "description": "Verifica si la fecha maxima seteada esta despues de una fecha",
+            "itemtype": "method",
+            "name": "maxDateAfter",
+            "return": {
+                "description": "",
+                "type": "Boolean"
+            },
+            "params": [
+                {
+                    "name": "fecha",
+                    "description": "fecha a comparar",
+                    "type": "String | Date"
+                }
+            ],
+            "class": "sgeDateService",
+            "module": "sgeComponents"
+        },
+        {
+            "file": "dateServices.js",
+            "line": 271,
+            "description": "Verifica si la fecha maxima seteada esta antes de una fecha",
+            "itemtype": "method",
+            "name": "maxDateBefore",
+            "return": {
+                "description": "",
+                "type": "Boolean"
+            },
+            "params": [
+                {
+                    "name": "fecha",
+                    "description": "fecha a comparar",
+                    "type": "String | Date"
+                }
+            ],
+            "class": "sgeDateService",
+            "module": "sgeComponents"
+        },
+        {
+            "file": "dateServices.js",
+            "line": 295,
+            "description": "Verifica si una fecha esta dentro de la fecha minima y maxima. La igualdad esta dentro de lo limites",
+            "itemtype": "method",
+            "name": "isDateBetween",
+            "return": {
+                "description": "",
+                "type": "Boolean"
+            },
+            "params": [
+                {
+                    "name": "fecha",
+                    "description": "fecha a comparar",
+                    "type": "String | Date"
+                }
+            ],
+            "class": "sgeDateService",
+            "module": "sgeComponents"
+        },
+        {
+            "file": "sgeMap.js",
+            "line": 42,
+            "description": "Actualiza la vista del mapa. Es util para cuando el mapa esta oculto y luego se muestra, reDraw deberia ser llamado para actualizar\nla vista",
+            "itemtype": "method",
+            "name": "reDraw",
+            "class": "sgeMap",
+            "module": "sgeComponents"
+        },
+        {
+            "file": "sgeMap.js",
+            "line": 65,
+            "description": "Carga los puntos de georeferencia al mapa y situa el centro del mapa en uno de los puntos",
+            "itemtype": "method",
+            "name": "setPointsFrom",
+            "params": [
+                {
+                    "name": "domId",
+                    "description": "id del elemento DOM que contiene los puntos de georeferencia",
+                    "type": "String"
+                }
+            ],
+            "class": "sgeMap",
+            "module": "sgeComponents"
+        },
+        {
+            "file": "sgeMap.js",
+            "line": 93,
+            "description": "Centra el mapa en una posicion especifica, de acuerdo a sus parametros. Pueden buscarse por provincia, localidad\ny/o partido (en este orden), funciona como estructura piramide.",
+            "itemtype": "method",
+            "name": "searchByProvince",
+            "params": [
+                {
+                    "name": "provincia",
+                    "description": "provincia a buscar",
+                    "type": "String"
+                },
+                {
+                    "name": "localidad",
+                    "description": "localidad a buscar",
+                    "type": "String"
+                },
+                {
+                    "name": "partido",
+                    "description": "partido/departamento a buscar",
+                    "type": "String"
+                }
+            ],
+            "deprecated": true,
+            "deprecationMessage": "Se aconseja usar los metodos `setPais`, `setProvincia`, `setLocalidad`, `setPartido`, `setCalle` y/o `setNroCalle`\npara una mejor organizacion del codigo.",
+            "class": "sgeMap",
+            "module": "sgeComponents"
+        },
+        {
+            "file": "sgeMap.js",
+            "line": 129,
+            "description": "Establece la forma de trabajar (edicion/creacion o solo-vista y que tipo de creacion)",
+            "itemtype": "method",
+            "name": "createMode",
+            "params": [
+                {
+                    "name": "modo",
+                    "description": "edicion/creation true, solo-vista false",
+                    "type": "Boolean"
+                },
+                {
+                    "name": "modoCreacion",
+                    "description": "1 = Punto, 2 = Poligono",
+                    "type": "Number"
+                }
+            ],
+            "deprecated": true,
+            "deprecationMessage": "Se aconseja usar los metodos `setViewOnly` y `enablePointMode`, `enableStreetMode`, `enablePolygonMode`\npor cuestiones de mantenimient, legibilidad y diseño",
+            "class": "sgeMap",
+            "module": "sgeComponents"
+        },
+        {
+            "file": "sgeMap.js",
+            "line": 149,
+            "description": "Crea el mapa segun las configuraciones seteada e inicializa los eventos para comenzar a insertar puntos",
+            "itemtype": "method",
+            "name": "loadMap",
+            "params": [
+                {
+                    "name": "zoom",
+                    "description": "el nivel de zoom",
+                    "type": "Number"
+                },
+                {
+                    "name": "domID",
+                    "description": "Id del elemento DOM en el que iniciara el mapa",
+                    "type": "String"
+                }
+            ],
+            "class": "sgeMap",
+            "module": "sgeComponents"
+        },
+        {
+            "file": "sgeMap.js",
+            "line": 182,
+            "description": "Establece la forma de trabajar (edicion/creacion o solo-vista y que tipo de creacion)",
+            "itemtype": "method",
+            "name": "drawPolygon",
+            "deprecated": true,
+            "deprecationMessage": "Se aconseja usar el metodo `draw` que es generico de acuerdo a las configuraciones seteadas",
+            "class": "sgeMap",
+            "module": "sgeComponents"
+        },
+        {
+            "file": "sgeMap.js",
+            "line": 204,
+            "description": "Genera los puntos de georeferencia con el siguiente formato '(latitudP1, longuitudP1 ; latitudP2, longuitudP2; ...)'",
+            "itemtype": "method",
+            "name": "generateGeoReference",
+            "class": "sgeMap",
+            "module": "sgeComponents"
+        },
+        {
+            "file": "sgeMap.js",
+            "line": 217,
+            "description": "Deshace el ultimo punto del mapa",
+            "itemtype": "method",
+            "name": "undoMarker",
+            "deprecated": true,
+            "deprecationMessage": "Usar `undoLastAction` que es mas generico",
+            "class": "sgeMap",
+            "module": "sgeComponents"
+        }
+    ],
+    "warnings": []
+}
