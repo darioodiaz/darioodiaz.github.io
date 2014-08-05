@@ -10,7 +10,15 @@ define(["jquery", 'async!http://maps.googleapis.com/maps/api/js?sensor=false'],
         var sgeMapModule = {};
 
         sgeMapModule.editMode = false;
-        sgeMapModule.mode = -1;
+        sgeMapModule.mode = -1; //Punto = 1, Poligono = 2, Calle = 3
+
+        sgeMapModule.country = "Argentina";
+        sgeMapModule.province = "";
+        sgeMapModule.state = ""; //Localidad
+        sgeMapModule.street = "";
+        sgeMapModule.streetNro = "";
+        sgeMapModule.partido = "";
+
         sgeMapModule.dom = "";
         sgeMapModule.listener;
         sgeMapModule.listaPuntos = [];
@@ -45,16 +53,205 @@ define(["jquery", 'async!http://maps.googleapis.com/maps/api/js?sensor=false'],
 * @method reDraw
 */
         sgeMapModule.reDraw = function() {
-            google.maps.event.trigger(sgeMapModule.map,'resize');
+            google.maps.event.trigger(sgeMapModule.map, 'resize');
         };
 
+/**
+* Setea el modo de trabajo del mapa a punto.
+* @method setPointMode
+* @param valor  {Boolean} Valor booleano para activar o no el modo
+*/
+        sgeMapModule.setPointMode = function(value) {
+            if (value) {
+                sgeMapModule.mode = 1;
+                sgeMapModule.attachListener();
+            } else {
+                sgeMapModule.mode = -1;
+            }
+        };
+
+/**
+* Setea el modo de trabajo del mapa a poligono.
+* @method setPolygonMode
+* @param valor {Boolean} Valor booleano para activar o no el modo
+*/
+        sgeMapModule.setPolygonMode = function(value) {
+            if (value) {
+                sgeMapModule.mode = 2;
+                sgeMapModule.attachListener();
+            } else {
+                sgeMapModule.mode = -1;
+            }
+        };
+
+/**
+* Setea el modo de trabajo del mapa a calle.
+* @method setStreetMode
+* @param valor {Boolean} Valor booleano para activar o no el modo
+*/
+        sgeMapModule.setStreetMode = function(value) {
+            if (value) {
+                sgeMapModule.mode = 3;
+                sgeMapModule.attachListener();
+            } else {
+                sgeMapModule.mode = -1;
+            }
+        };
+
+/**
+* Setea el pais para visualizar en el mapa.
+* @method setPais
+* @param pais {String} El pais a visualizar
+*/   
+        sgeMapModule.setPais = function(pais) {
+            sgeMapModule.country = pais;
+
+            sgeMapModule.province = "";
+            sgeMapModule.partido = "";
+            sgeMapModule.state = "";
+            sgeMapModule.calle = "";
+            sgeMapModule.nroCalle = "";
+        };
+
+/**
+* Setea la provincia para visualizar en el mapa.
+* @method setProvincia
+* @param provincia {String} La provincia a visualizar
+*/   
+        sgeMapModule.setProvincia = function(provincia) {
+            sgeMapModule.province = provincia;
+
+            sgeMapModule.partido = "";
+            sgeMapModule.state = "";
+            sgeMapModule.calle = "";
+            sgeMapModule.nroCalle = "";
+        };
+
+/**
+* Setea el partido para visualizar en el mapa.
+* @method setPartido
+* @param partido {String} El partido a visualizar
+*/   
+        sgeMapModule.setPartido = function(Partido) {
+            sgeMapModule.partido = Partido;
+
+            sgeMapModule.state = "";
+            sgeMapModule.calle = "";
+            sgeMapModule.nroCalle = "";
+        };
+
+/**
+* Setea la localidad para visualizar en el mapa.
+* @method setLocalidad
+* @param localidad {String} La localidad a visualizar
+*/   
+        sgeMapModule.setLocalidad = function(localidad) {
+            sgeMapModule.state = localidad;
+
+            sgeMapModule.calle = "";
+            sgeMapModule.nroCalle = "";
+        };
+
+/**
+* Setea la calle para visualizar en el mapa.
+* @method setCalle
+* @param calle {String} La calle a visualizar
+*/   
+        sgeMapModule.setCalle = function(calle) {
+            sgeMapModule.street = calle;
+
+            sgeMapModule.nroCalle = "";
+        };
+
+/**
+* Setea la altura de la calle para visualizar en el mapa.
+* @method setNroCalle
+* @param nroCalle {Number} La altura de la calle a visualizar
+*/   
+        sgeMapModule.setNroCalle = function(altura) {
+            sgeMapModule.streetNro = altura;
+        };
+
+/**
+* Visualiza el mapa segun el pais, provincia, localidad, calle y numero seteados.
+* @method locate
+* @param marcador {Boolean} Valor booleano que permite hacer un marcador en la posicion localizada
+*/   
+        sgeMapModule.locate = function(marker) {
+            //Calle Nro, Localidad, Departamento, Provincia, Pais
+            //Massa 2243, Carlos Paz, Punilla, Cordoba, Argentina
+            var location = "";
+            if (sgeMapModule.street) {
+                location += sgeMapModule.street.replace("_", " ").toLowerCase();
+            }
+            if (sgeMapModule.streetNro) {
+                location += " " + sgeMapModule.streetNro;
+            }
+            if (sgeMapModule.state) {
+                if (location != "") {
+                    location += ", " + sgeMapModule.state.replace("_", " ").toLowerCase();
+                } else {
+                    location += sgeMapModule.state.replace("_", " ").toLowerCase();
+                }
+            }
+            if (sgeMapModule.partido) {
+                if (location != "") {
+                    location += ", " + sgeMapModule.partido.replace("_", " ").toLowerCase();
+                } else {
+                    location += sgeMapModule.partido.replace("_", " ").toLowerCase();
+                }
+            }
+            if (sgeMapModule.province) {
+                if (location != "") {
+                    location += ", " + sgeMapModule.province.replace("_", " ").toLowerCase();
+                } else {
+                    location += sgeMapModule.province.replace("_", " ").toLowerCase();
+                }
+            }
+            if (location != "") {
+                location += ", " + sgeMapModule.country.replace("_", " ").toLowerCase();
+            } else {
+                location += sgeMapModule.country.replace("_", " ").toLowerCase();
+            }
+            console.log(location);
+
+            var geoObj = {};
+            geoObj.address = location;
+            sgeMapModule.geocoder.geocode(geoObj, function(results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                    var pos = results[0].geometry.location;
+                    sgeMapModule.centro = pos;
+                    sgeMapModule.map.setCenter(pos);
+                    if (marker) {
+                        var marker = new google.maps.Marker({
+                            position: pos,
+                            map: sgeMapModule.map
+                        });
+                        var info = new google.maps.InfoWindow({
+                            content: results[0].formatted_address,
+                            position: pos
+                        });
+                        info.open(sgeMapModule.map);
+                    }
+                } else {
+                    console.log('Error en locate: ', status);
+              }
+          });
+        };
+
+
         sgeMapModule.reset = function() {
-            sgeMapModule.map = new google.maps.Map(document.getElementById(sgeMapModule.dom), sgeMapModule.opciones);
-            sgeMapModule.poly = new google.maps.Polyline(sgeMapModule.polyOptions);
-            sgeMapModule.poly.setMap(sgeMapModule.map);
+            //sgeMapModule.map = new google.maps.Map(document.getElementById(sgeMapModule.dom), sgeMapModule.opciones);
+            //sgeMapModule.poly = new google.maps.Polyline(sgeMapModule.polyOptions);
+            sgeMapModule.poly.setMap(null);
             sgeMapModule.listaPuntos = [];
+
+            for (var i = 0; i < sgeMapModule.markers.length; i++) {
+                sgeMapModule.markers[i].setMap(null);
+            };
             sgeMapModule.markers = [];
-            if (sgeMapModule.editMode && sgeMapModule.listener != null) {
+
+            if ( (sgeMapModule.editMode || sgeMapModule.mode != -1) && sgeMapModule.listener == null) {
                 try {
                     sgeMapModule.listener = google.maps.event.addListener(sgeMapModule.map, 'click', sgeMapModule.addLatLng);
                 } catch (e) {console.log("Error en enable");}
@@ -87,7 +284,6 @@ define(["jquery", 'async!http://maps.googleapis.com/maps/api/js?sensor=false'],
                 sgeMapModule.addMarker(marker);
             }
             sgeMapModule.map.setCenter(first);
-
         };
 
 /**
@@ -159,7 +355,7 @@ define(["jquery", 'async!http://maps.googleapis.com/maps/api/js?sensor=false'],
                 zoom: zoom,
                 center: sgeMapModule.centro,
                 mapTypeId: google.maps.MapTypeId.ROADMAP,
-                disableDefaultUI: true
+                disableDefaultUI: false
             };
 
             if (document.getElementById(domElement) != null) {
@@ -172,7 +368,8 @@ define(["jquery", 'async!http://maps.googleapis.com/maps/api/js?sensor=false'],
             } else {
                 alert("No hay elemento para dibujar el mapa.");
             }
-            if (sgeMapModule.editMode) {
+
+            if (sgeMapModule.editMode || sgeMapModule.mode != -1) {
                 try {
                     sgeMapModule.listener = google.maps.event.addListener(sgeMapModule.map, 'click', sgeMapModule.addLatLng);
                 } catch (e) {console.log("Error en enable");}
@@ -180,12 +377,32 @@ define(["jquery", 'async!http://maps.googleapis.com/maps/api/js?sensor=false'],
         };
 
 /**
-* Establece la forma de trabajar (edicion/creacion o solo-vista y que tipo de creacion)
+* Dibujar el poligono segun los puntos hechos
 *
 * @method drawPolygon
 * @deprecated Se aconseja usar el metodo `draw` que es generico de acuerdo a las configuraciones seteadas
 */
         sgeMapModule.drawPolygon = function (paths) {
+            if (sgeMapModule.mode != 2) {
+                return;
+            }
+            if (paths) {
+                sgeMapModule.poly.setPath(paths);
+                sgeMapModule.poligonoRuta.setPath(paths);
+                sgeMapModule.listaPuntos = sgeMapModule.poly.latLngs.j[0].j;
+                sgeMapModule.poligonoRuta.setMap(sgeMapModule.map);
+            } else {
+                sgeMapModule.poly.setPath(sgeMapModule.listaPuntos);
+                sgeMapModule.poligonoRuta.setPath(sgeMapModule.listaPuntos);
+                sgeMapModule.poligonoRuta.setMap(sgeMapModule.map);
+            }
+        };
+
+/**
+* Dibujar el mapa de acuerdo al tipo seteado
+* @method draw
+*/
+        sgeMapModule.draw = function (paths) {
             if (sgeMapModule.mode != 2) {
                 return;
             }
@@ -231,7 +448,7 @@ define(["jquery", 'async!http://maps.googleapis.com/maps/api/js?sensor=false'],
                     sgeMapModule.markers.splice(pos, 1);
                 }
                 var path = sgeMapModule.poly.getPath();
-                path.pop(); //Elimina la ultima linea dibujada en el poligono
+                path.pop();
             }
         };
 
@@ -240,14 +457,40 @@ define(["jquery", 'async!http://maps.googleapis.com/maps/api/js?sensor=false'],
         };
 
         //PRIVATE METHODS
+        
+        function attachListener() {
+            if (sgeMapModule.editMode || sgeMapModule.mode != -1) {
+                try {
+                    sgeMapModule.listener = google.maps.event.addListener(sgeMapModule.map, 'click', sgeMapModule.addLatLng);
+                } catch (e) {console.log("Error en enable");}
+            }
+        };
+
+        function searchStreet(pos) {
+            var geoObj = {};
+            geoObj.latLng = pos;
+            sgeMapModule.geocoder.geocode(geoObj, function(results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                    console.log("Result: ", results);
+                    console.log("Status: ", status);
+                } else {
+                    console.log('Error en searchStreet: ', status);
+                }
+            });
+        };
+
         sgeMapModule.addLatLng = function (event) {
+            if (sgeMapModule.mode == 3) {
+                //searchStreet(event.latLng);
+                return;
+            }
+            sgeMapModule.addMarker(event.latLng);
             if (sgeMapModule.mode == 1) {
                 try {
                     google.maps.event.removeListener(sgeMapModule.listener);
                     sgeMapModule.listener = null;
                 } catch (e) {console.log("Error en removeListener");}
             }
-            sgeMapModule.addMarker(event.latLng);
         };
 
         sgeMapModule.getListaPuntos = function() {

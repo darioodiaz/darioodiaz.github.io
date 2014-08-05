@@ -34,7 +34,7 @@
             "namespaces": {},
             "tag": "module",
             "file": "sgeMap.js",
-            "line": 36,
+            "line": 44,
             "description": "Modulo Gde componentes para SGE"
         }
     },
@@ -64,7 +64,7 @@
             "module": "sgeComponents",
             "namespace": "",
             "file": "sgeMap.js",
-            "line": 36,
+            "line": 44,
             "description": "Componente que permite el trabajo con mapas"
         }
     },
@@ -383,7 +383,7 @@
         },
         {
             "file": "sgeMap.js",
-            "line": 42,
+            "line": 50,
             "description": "Actualiza la vista del mapa. Es util para cuando el mapa esta oculto y luego se muestra, reDraw deberia ser llamado para actualizar\nla vista",
             "itemtype": "method",
             "name": "reDraw",
@@ -392,7 +392,167 @@
         },
         {
             "file": "sgeMap.js",
-            "line": 65,
+            "line": 59,
+            "description": "Setea el modo de trabajo del mapa a punto.",
+            "itemtype": "method",
+            "name": "setPointMode",
+            "params": [
+                {
+                    "name": "valor",
+                    "description": "Valor booleano para activar o no el modo",
+                    "type": "Boolean"
+                }
+            ],
+            "class": "sgeMap",
+            "module": "sgeComponents"
+        },
+        {
+            "file": "sgeMap.js",
+            "line": 73,
+            "description": "Setea el modo de trabajo del mapa a poligono.",
+            "itemtype": "method",
+            "name": "setPolygonMode",
+            "params": [
+                {
+                    "name": "valor",
+                    "description": "Valor booleano para activar o no el modo",
+                    "type": "Boolean"
+                }
+            ],
+            "class": "sgeMap",
+            "module": "sgeComponents"
+        },
+        {
+            "file": "sgeMap.js",
+            "line": 87,
+            "description": "Setea el modo de trabajo del mapa a calle.",
+            "itemtype": "method",
+            "name": "setStreetMode",
+            "params": [
+                {
+                    "name": "valor",
+                    "description": "Valor booleano para activar o no el modo",
+                    "type": "Boolean"
+                }
+            ],
+            "class": "sgeMap",
+            "module": "sgeComponents"
+        },
+        {
+            "file": "sgeMap.js",
+            "line": 101,
+            "description": "Setea el pais para visualizar en el mapa.",
+            "itemtype": "method",
+            "name": "setPais",
+            "params": [
+                {
+                    "name": "pais",
+                    "description": "El pais a visualizar",
+                    "type": "String"
+                }
+            ],
+            "class": "sgeMap",
+            "module": "sgeComponents"
+        },
+        {
+            "file": "sgeMap.js",
+            "line": 116,
+            "description": "Setea la provincia para visualizar en el mapa.",
+            "itemtype": "method",
+            "name": "setProvincia",
+            "params": [
+                {
+                    "name": "provincia",
+                    "description": "La provincia a visualizar",
+                    "type": "String"
+                }
+            ],
+            "class": "sgeMap",
+            "module": "sgeComponents"
+        },
+        {
+            "file": "sgeMap.js",
+            "line": 130,
+            "description": "Setea el partido para visualizar en el mapa.",
+            "itemtype": "method",
+            "name": "setPartido",
+            "params": [
+                {
+                    "name": "partido",
+                    "description": "El partido a visualizar",
+                    "type": "String"
+                }
+            ],
+            "class": "sgeMap",
+            "module": "sgeComponents"
+        },
+        {
+            "file": "sgeMap.js",
+            "line": 143,
+            "description": "Setea la localidad para visualizar en el mapa.",
+            "itemtype": "method",
+            "name": "setLocalidad",
+            "params": [
+                {
+                    "name": "localidad",
+                    "description": "La localidad a visualizar",
+                    "type": "String"
+                }
+            ],
+            "class": "sgeMap",
+            "module": "sgeComponents"
+        },
+        {
+            "file": "sgeMap.js",
+            "line": 155,
+            "description": "Setea la calle para visualizar en el mapa.",
+            "itemtype": "method",
+            "name": "setCalle",
+            "params": [
+                {
+                    "name": "calle",
+                    "description": "La calle a visualizar",
+                    "type": "String"
+                }
+            ],
+            "class": "sgeMap",
+            "module": "sgeComponents"
+        },
+        {
+            "file": "sgeMap.js",
+            "line": 166,
+            "description": "Setea la altura de la calle para visualizar en el mapa.",
+            "itemtype": "method",
+            "name": "setNroCalle",
+            "params": [
+                {
+                    "name": "nroCalle",
+                    "description": "La altura de la calle a visualizar",
+                    "type": "Number"
+                }
+            ],
+            "class": "sgeMap",
+            "module": "sgeComponents"
+        },
+        {
+            "file": "sgeMap.js",
+            "line": 175,
+            "description": "Visualiza el mapa segun el pais, provincia, localidad, calle y numero seteados.",
+            "itemtype": "method",
+            "name": "locate",
+            "params": [
+                {
+                    "name": "marcador",
+                    "description": "Valor booleano que permite hacer un marcador en la posicion localizada",
+                    "type": "Boolean"
+                }
+            ],
+            "class": "sgeMap",
+            "module": "sgeComponents"
+        },
+        {
+            "file": "sgeMap.js",
+            "line": 262,
             "description": "Carga los puntos de georeferencia al mapa y situa el centro del mapa en uno de los puntos",
             "itemtype": "method",
             "name": "setPointsFrom",
@@ -408,7 +568,7 @@
         },
         {
             "file": "sgeMap.js",
-            "line": 93,
+            "line": 289,
             "description": "Centra el mapa en una posicion especifica, de acuerdo a sus parametros. Pueden buscarse por provincia, localidad\ny/o partido (en este orden), funciona como estructura piramide.",
             "itemtype": "method",
             "name": "searchByProvince",
@@ -436,7 +596,7 @@
         },
         {
             "file": "sgeMap.js",
-            "line": 129,
+            "line": 325,
             "description": "Establece la forma de trabajar (edicion/creacion o solo-vista y que tipo de creacion)",
             "itemtype": "method",
             "name": "createMode",
@@ -459,7 +619,7 @@
         },
         {
             "file": "sgeMap.js",
-            "line": 149,
+            "line": 345,
             "description": "Crea el mapa segun las configuraciones seteada e inicializa los eventos para comenzar a insertar puntos",
             "itemtype": "method",
             "name": "loadMap",
@@ -480,8 +640,8 @@
         },
         {
             "file": "sgeMap.js",
-            "line": 182,
-            "description": "Establece la forma de trabajar (edicion/creacion o solo-vista y que tipo de creacion)",
+            "line": 379,
+            "description": "Dibujar el poligono segun los puntos hechos",
             "itemtype": "method",
             "name": "drawPolygon",
             "deprecated": true,
@@ -491,7 +651,16 @@
         },
         {
             "file": "sgeMap.js",
-            "line": 204,
+            "line": 401,
+            "description": "Dibujar el mapa de acuerdo al tipo seteado",
+            "itemtype": "method",
+            "name": "draw",
+            "class": "sgeMap",
+            "module": "sgeComponents"
+        },
+        {
+            "file": "sgeMap.js",
+            "line": 421,
             "description": "Genera los puntos de georeferencia con el siguiente formato '(latitudP1, longuitudP1 ; latitudP2, longuitudP2; ...)'",
             "itemtype": "method",
             "name": "generateGeoReference",
@@ -500,7 +669,7 @@
         },
         {
             "file": "sgeMap.js",
-            "line": 217,
+            "line": 434,
             "description": "Deshace el ultimo punto del mapa",
             "itemtype": "method",
             "name": "undoMarker",
