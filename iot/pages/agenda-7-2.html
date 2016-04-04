@@ -1,0 +1,27 @@
+<template>
+	<section>
+		<h2>Mas alla de la robotica</h2>
+		<h4>Ejemplo Arduino</h4>
+
+		<pre>
+			<code>
+		#include &lt;IRremote.h&gt;
+		int RECV_PIN = 3;
+		IRrecv irrecv(RECV_PIN);
+		decode_results results;
+
+		void setup() {
+  			Serial.begin(9600);
+  			irrecv.enableIRIn();
+		}
+
+		void loop() {
+  			if (irrecv.decode(&results)) {
+    			Serial.println(results.value, HEX);
+    			irrecv.resume();
+  			}
+		}
+			</code>
+		</pre>
+</section>
+</template>

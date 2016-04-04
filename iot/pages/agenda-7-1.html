@@ -1,0 +1,31 @@
+<template>
+	<section>
+		<h2>Mas alla de la robotica</h2>
+		<h4>Ejemplo Nodejs</h4>
+
+		<pre>
+			<code>
+	var nodeSerialPort = require("serialport");
+	var SerialPort = nodeSerialPort.SerialPort;
+	nodeSerialPort.list(onSerialPortList);
+	function onSerialPortList(err, ports) {
+		console.log("Ports founds: ", ports);
+		.....
+	};
+	function createConnection() {
+		var serialPort = new SerialPort("COM9", { 
+			baudrate: 9600, 
+			parser: nodeSerialPort.parsers.readline("\n")
+		});
+		serialPort.on("open", onSerialPortOpen);
+	};
+	function onSerialPortOpen() {
+		serialPort.on("data", onSerialPortData);
+		function onSerialPortData(data) {
+			......
+		};
+	};
+			</code>
+		</pre>
+</section>
+</template>

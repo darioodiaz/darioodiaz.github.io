@@ -1,0 +1,22 @@
+<template>
+	<section>
+		<h2>Arquitectura de comunicacion</h2>
+		<h4>Ejemplo de Johnny-five</h4>
+
+		<pre>
+			<code>
+		var five = require("johnny-five");
+		var board = new five.Board();
+		
+		board.on("ready", function() {
+			// Creamos un led en el pin 13
+			var led = new five.Led(13);
+			// Paradea cada 1/2 segundo
+			led.blink(500); 
+		});
+				</code>
+			</pre>
+
+
+	</section>
+</template>
